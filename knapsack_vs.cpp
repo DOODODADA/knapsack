@@ -15,6 +15,13 @@ struct Item {
     }
 };
 
+struct cur{
+    int v, w, it;
+    cur(int v_, int w_, int it_): v(v_), w(w_), it(it_) {}
+};
+
+stack<cur> st;
+
 Item items[1005];
 int n, M;
 int ret;
@@ -61,13 +68,21 @@ void dfs(int it, int v, int w){
 }
 
 void dfs_(int it, int v, int w){
-    if (it > n){
-        if (w >= 0)
-            ret =  max(v, ret);
-        return;
+    st.push(cur(v, w, it));
+    while(!st.empty()){
+        cur tmp = st.top();
+        st.pop();
+        //cout << tmp.it << endl;
+        if (tmp.it > n){
+            if (tmp.w >= 0){
+                ret = max(ret, tmp.v);
+            }
+        }
+        else{
+            st.push(cur(tmp.v + items[tmp.it].v, tmp.w - items[tmp.it].w, tmp.it + 1));
+            st.push(cur(tmp.v, tmp.w, tmp.it + 1));
+        }
     }
-    dfs_(it + 1, v + items[it].v, w - items[it].w);
-    dfs_(it + 1, v, w);
 }
 
 
