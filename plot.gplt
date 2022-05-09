@@ -1,0 +1,9 @@
+set terminal png
+set xlabel "# of items"
+set ylabel "time (sec)"
+set title "[106081035] Brute Force v.s. Branch & Bound"
+set logscale y
+set format y "10^{%T}"
+set output "vs.png"
+plot "plot.dat" using 1:2 title 'branch \& bound' w lp pt 5,\
+     "plot.dat" using 1:3 title 'brute force' w lp pt 7
